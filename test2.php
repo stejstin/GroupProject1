@@ -54,9 +54,7 @@
     <br><br>
 
     <span>Chart Data: </span>
-    <textarea name="data" rows="5" cols="40">
-
-    </textarea>
+    <textarea name="data" rows="5" cols="40"></textarea>
 
 
 
@@ -81,14 +79,15 @@
   $explode1 = explode("\n", $chartData);
   $implode1 = implode(",", $explode1);
   $explode2 = explode(",", $implode1);
-
   
+
   $array = $explode2;
   $size = count($explode2);
   $result = array();
   for ($i = 0; $i < $size; $i += 2) {
     unset($array[$i]);
   }
+
   $average = array_sum($array) / count($array);
   
   if ($selectOption2 == "None") { 
@@ -129,11 +128,7 @@
   echo "<br>";
   echo "<br>";
 
-  echo "Raw Data: ";
-  echo "<br>";
-  echo $chartData;
-  echo "<br>";
-  echo "<br>";
+  echo "Raw Data: <br> <pre> " . $_POST['data'] . " </pre>";
   echo "<br>";
 
   $arraycount = count($explode2);
@@ -299,11 +294,7 @@ function sortTableName() {
   echo "<br>";
   echo "<br>";
 
-  echo "Raw Data: ";
-  echo "<br>";
-  echo $chartData;
-  echo "<br>";
-  echo "<br>";
+  echo "Raw Data: <br> <pre> " . $_POST['data'] . " </pre>";
   echo "<br>";
 
   $arraycount = count($explode2);
@@ -433,7 +424,7 @@ function sortTableGrade() {
   $average = array_sum($array) / count($array);
 
     
-  if ($selectOption2 == 'Score') {
+if ($selectOption2 == 'Score') {
   echo "Highest: (index = ";
   for ($i = 0; $i < $size; $i++) {
     if ($explode2[$i] == max($array)) {
@@ -471,11 +462,7 @@ function sortTableGrade() {
   echo "<br>";
   echo "<br>";
 
-  echo "Raw Data: ";
-  echo "<br>";
-  echo $chartData;
-  echo "<br>";
-  echo "<br>";
+  echo "Raw Data: <br> <pre> " . $_POST['data'] . " </pre>";
   echo "<br>";
 
   $arraycount = count($explode2);
@@ -546,6 +533,222 @@ echo "</tbody>";
 echo "</table>";
 
 echo '<script> sortTableGrade(); </script>';
+}
+?>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+function sortTableName() {
+  var table, rows, switching, i, x, y, shouldSwitch;
+  table = document.getElementById("myTable");
+  switching = true;
+  /*Make a loop that will continue until
+  no switching has been done:*/
+  while (switching) {
+    //start by saying: no switching is done:
+    switching = false;
+    rows = table.getElementsByTagName("TR");
+    /*Loop through all table rows (except the
+    first, which contains table headers):*/
+    for (i = 1; i < (rows.length - 1); i++) {
+      //start by saying there should be no switching:
+      shouldSwitch = false;
+      /*Get the two elements you want to compare,
+      one from current row and one from the next:*/
+      x = rows[i].getElementsByTagName("TD")[0];
+      y = rows[i + 1].getElementsByTagName("TD")[0];
+      //check if the two rows should switch place:
+      if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+        //if so, mark as a switch and break the loop:
+        shouldSwitch= true;
+        break;
+      }
+    }
+    if (shouldSwitch) {
+      /*If a switch has been marked, make the switch
+      and mark that a switch has been done:*/
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
+}
+</script>
+
+<?php
+  $selectOption = $_POST['selection'];
+  $selectOption2 = $_POST['sort'];
+  $chartData = $_POST['data'];
+  $explode1 = explode("\n", $chartData);
+  $implode1 = implode(",", $explode1);
+  $explode2 = explode(",", $implode1);
+  $implode2 = implode(" ", $explode2);
+  $Namespace = explode(" ", $implode2); 
+  $implodeScores = implode(" ", $Scores);
+  $explodeScores = explode(" ", $implodeScores);
+
+
+   
+  $LastnameArray = array();
+  $size = count($Namespace);
+  $result1 = array();
+  for ($i = 1; $i < $size; $i += 3) {
+    $LastnameArray[$i] = $Namespace[$i];
+  }
+
+
+
+  $FirstnameArray = array();
+  $size = count($Namespace);
+  $result1 = array();
+  for ($i = 0; $i < $size; $i += 3) {
+    $FirstnameArray[$i] = $Namespace[$i];
+
+  }
+
+  $Scores = array();
+  $size = count($explode2);
+  $result2 = array();
+  for ($i = 1; $i < $size; $i += 2) {
+    $Scores[$i] = $explode2[$i];
+  }
+
+
+  $array = $explode2;
+  $size = count($explode2);
+  $result = array();
+  for ($i = 0; $i < $size; $i += 2) {
+    unset($array[$i]);
+  }
+  $average = array_sum($array) / count($array);
+
+    
+ if ($selectOption2 == 'Last Name') {
+  echo "Highest: (index = ";
+  for ($i = 0; $i < $size; $i++) {
+    if ($explode2[$i] == max($array)) {
+      $g = $i - 1;
+      echo " $g) ";
+      echo $explode2[$g];
+      echo " - ";
+    }
+  }
+
+  echo max($array);
+  echo "<br>";
+  echo "Lowest: (index = ";
+    for ($i = 0; $i < $size; $i++) {
+    if ($explode2[$i] == min($array)) {  
+      $g = $i - 1;
+      echo " $g) ";
+      echo $explode2[$g];
+      echo " - ";
+    }
+  }
+
+  echo min($array);
+  echo "<br>";
+  echo "Average: ";
+  echo  round($average, 2);
+  echo "<br>";
+  echo "<br>";
+  echo "Chart Type: ";
+  echo $selectOption;
+  echo "<br>";
+  echo "<br>";
+  echo "Sorted by: ";
+  echo $selectOption2;
+  echo "<br>";
+  echo "<br>";
+
+  echo "Raw Data: <br> <pre> " . $_POST['data'] . " </pre>";
+  echo "<br>";
+
+  
+  $stars = array("*", "**", "***", "****","*****", "******","*******","********", "*********", "**********");
+
+  
+  $combineNames = array_map(function ($LastnameArray, $FirstnameArray) { return "$LastnameArray $FirstnameArray"; },
+    $LastnameArray,
+    $FirstnameArray
+);
+  $implodeScores = implode(" ", $Scores);
+  $explodeScores = explode(" ", $implodeScores);
+
+
+  $arraycount = count($explodeScores);
+
+  echo "<table id = 'myTable' class='table table-striped'>";
+
+  echo "<tr>";
+  echo "<th>Name</th>";
+  echo "<th>Grade</th>"; 
+  echo "<th>Chart</th>";
+  
+  echo "<tbody>";
+  echo "</tr>";
+
+  for ($i = 0; $i < $arraycount; $i++) {
+  echo "<tr>";
+  echo  "<td>$combineNames[$i]</td>";
+  echo "<td>$explodeScores[$i]</td>";
+
+if ($explodeScores[$i] >= 10 AND $explodeScores[$i] < 20) {
+  echo "<td>$stars[0]</td>";
+}
+
+if ($explodeScores[$i] >= 20 AND $explodeScores[$i] < 30) {
+  echo "<td>$stars[1]</td>";
+}
+
+if ($explodeScores[$i] >= 30 AND $explodeScores[$i] < 40) {
+  echo "<td>$stars[2]</td>";
+}
+
+if ($explodeScores[$i] >= 40 AND $explodeScores[$i] < 50) {
+  echo "<td>$stars[3]</td>";
+}
+
+if ($explodeScores[$i] >= 50 AND $explodeScores[$i] < 60) {
+  echo "<td>$stars[4]</td>";
+}
+
+if ($explodeScores[$i] >= 60 AND $explodeScores[$i] < 70) {
+  echo "<td>$stars[5]</td>";
+}
+
+if ($explodeScores[$i] >= 70 AND $explodeScores[$i] < 80) {
+  echo "<td>$stars[6]</td>";
+}
+
+if ($explodeScores[$i] >= 80 AND $explodeScores[$i] < 90) {
+  echo "<td>$stars[7]</td>";
+}
+
+if ($explodeScores[$i] >= 90 AND $explodeScores[$i] < 100) {
+  echo "<td>$stars[8]</td>";
+}
+
+if ($explodeScores[$i] >= 100) {
+  echo "<td>$stars[9]</td>";
+}
+
+echo "</tr>";
+
+}
+echo "</tbody>";
+echo "</table>";
+
+echo '<script> sortTableName(); </script>';
+
 }
 ?>
 
