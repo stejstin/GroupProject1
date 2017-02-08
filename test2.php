@@ -752,6 +752,5 @@ echo '<script> sortTableName(); </script>';
 }
 ?>
 
-</body>
- 
+</body> 
 </html>
