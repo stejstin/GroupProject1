@@ -23,7 +23,7 @@
 
     <form method = "post">
 
-    Chart Name: <input type = 'text' name = "name"\>
+    Chart Name: <input type = 'text' name = "name" value="<?php if(isset($_POST['name'])) { echo htmlentities ($_POST['name']); }?>"/>
 
 
     <br> <br>
@@ -54,7 +54,9 @@
     <br><br>
 
     <span>Chart Data: </span>
-    <textarea name="data" rows="5" cols="40"></textarea>
+    <textarea name="data" rows="5" cols="40">
+    <?php if(isset($_POST['data'])) { echo htmlentities ($_POST['data']); }?>
+    </textarea>
 
 
 
@@ -752,5 +754,6 @@ echo '<script> sortTableName(); </script>';
 }
 ?>
 
-</body> 
+</body>
+ 
 </html>
