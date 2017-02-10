@@ -31,7 +31,7 @@
     <select name = 'selection'>
     <option value="">Select an option</option>
     <optgroup label="Chart Type">
-        <option value="Stat">Stat</option>
+        <option value="Stat" <?php if ($_GET['selectOption']=="Stat") {echo "selected='selected'"; } ?> >Stat</option>
         <option value="Bar">Bar</option>
         <option value="Line">Line</option>
         <option value="Pie">Pie</option>
@@ -54,9 +54,7 @@
     <br><br>
 
     <span>Chart Data: </span>
-    <textarea name="data" rows="5" cols="40">
-    <?php if(isset($_POST['data'])) { echo htmlentities ($_POST['data']); }?>
-    </textarea>
+    <textarea name="data" rows="5" cols="40"><?php if(isset($_POST['data'])) { echo htmlentities ($_POST['data']); }?></textarea>
 
 
 
@@ -296,7 +294,7 @@ function sortTableName() {
   echo "<br>";
   echo "<br>";
 
-  echo "Raw Data: <br> <pre> " . $_POST['data'] . " </pre>";
+  echo "Raw Data:<pre>". $_POST['data'] ."</pre>";
   echo "<br>";
 
   $arraycount = count($explode2);
