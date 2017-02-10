@@ -31,7 +31,7 @@
     <select name = 'selection'>
     <option value="">Select an option</option>
     <optgroup label="Chart Type">
-        <option value="Stat" <?php if ($_GET['selectOption']=="Stat") {echo "selected='selected'"; } ?> >Stat</option>
+        <option value="Stat">Stat</option>
         <option value="Bar">Bar</option>
         <option value="Line">Line</option>
         <option value="Pie">Pie</option>
